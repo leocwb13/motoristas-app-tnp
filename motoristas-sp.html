@@ -151,21 +151,26 @@
     const nome = document.getElementById('nome').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
 
-    // Envio dos dados para o webhook
-    try {
-      await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, telefone })
-      });
-
-      // Disparo do evento de conversão para o Meta Pixel
+        // Disparo do evento de conversão para o Meta Pixel
      const event_id = Date.now().toString(); // ou um UUID
 
       fbq('track', 'Lead', {
         event_id: event_id
       });
 
+    // Envio dos dados para o webhook
+    try {
+           await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome,
+          telefone,
+          event_id: event_id
+        })
+      });
+
+      
       // Exibição da mensagem de sucesso e do botão para o grupo do WhatsApp
       document.getElementById('leadForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
