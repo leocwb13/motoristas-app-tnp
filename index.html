@@ -149,7 +149,6 @@
 
     // Coleta dos dados do formulário
     const nome = document.getElementById('nome').value.trim();
-    const email = document.getElementById('email').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
 
     // Envio dos dados para o webhook
@@ -157,22 +156,22 @@
       await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, email, telefone })
+        body: JSON.stringify({ nome, telefone })
       });
 
       // Disparo do evento de conversão para o Meta Pixel
       fbq('track', 'Lead');
 
-      // Exibição do botão para o grupo do WhatsApp
+      // Exibição da mensagem de sucesso e do botão para o grupo do WhatsApp
       document.getElementById('leadForm').style.display = 'none';
-      document.getElementById('whatsSuccess').style.display = 'block';
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('whatsappBtn').style.display = 'block';
     } catch (error) {
       console.error('Erro ao enviar os dados:', error);
       alert('Ocorreu um erro ao enviar seus dados. Por favor, tente novamente.');
     }
   });
 </script>
-
 
 </body>
 </html>
