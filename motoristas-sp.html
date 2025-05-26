@@ -160,7 +160,11 @@
       });
 
       // Disparo do evento de conversão para o Meta Pixel
-      fbq('track', 'Lead');
+     const event_id = Date.now().toString(); // ou um UUID
+
+      fbq('track', 'Lead', {
+        event_id: event_id
+      });
 
       // Exibição da mensagem de sucesso e do botão para o grupo do WhatsApp
       document.getElementById('leadForm').style.display = 'none';
