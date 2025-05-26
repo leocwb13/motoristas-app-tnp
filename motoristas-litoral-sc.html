@@ -115,50 +115,37 @@
   <p>Descubra como ganhar até <strong>3x mais</strong> sendo motorista de app, sem mudar sua rotina! Preencha seus dados e receba as informações no WhatsApp:</p>
 
   <form id="leadForm">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required>
+  <label for="nome">Nome:</label>
+  <input type="text" id="nome" name="nome" required>
 
-    <label for="telefone">Telefone (com DDD, qualquer formato):</label>
-    <input type="tel" id="telefone" name="telefone" required>
+  <label for="telefone">Telefone (com DDD, qualquer formato):</label>
+  <input type="tel" id="telefone" name="telefone" required>
 
-    <button type="submit">Quero Participar</button>
-  </form>
+  <button type="submit">Quero Participar</button>
+</form>
 
-  <div class="success" id="successMsg">✅ Cadastro enviado com sucesso! Agora entre no grupo exclusivo:</div>
-
-  <a id="whatsappBtn" class="whatsapp-btn" href="https://chat.whatsapp.com/BN3wXdONsvi4ZZO16Y3cGH" target="_blank">Entrar no Grupo do WhatsApp</a>
+<div class="success" id="successMsg" style="display: none;">
+  ✅ Cadastro enviado com sucesso! Agora entre no grupo exclusivo:
 </div>
+
+<a id="whatsappBtn" class="whatsapp-btn" href="https://chat.whatsapp.com/IVSJySnoebbD4ZYFtZEw4d" target="_blank" style="display: none;">
+  Entrar no Grupo do WhatsApp
+</a>
 
 <script>
   document.getElementById('leadForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    if (!e.target.reportValidity()) return;
-
     const nome = document.getElementById('nome').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
 
-    // Gera o event_id para deduplicação
-    const event_id = Date.now().toString();
-
-    // Dispara evento do Meta Pixel com deduplicação
-    fbq('track', 'Lead', {
-      event_id: event_id
-    });
-
     try {
-          await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      mode: 'cors',
-      body: JSON.stringify({
-        nome: nome,
-        telefone: telefone,
-        event_id: event_id
-      })
-    });
-
-
+      await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors',
+        body: JSON.stringify({ nome, telefone })
+      });
 
       document.getElementById('leadForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
