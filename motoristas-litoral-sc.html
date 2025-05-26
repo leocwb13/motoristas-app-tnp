@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-      <!-- Meta Pixel Code -->
-    <script>
+  <!-- Meta Pixel Code -->
+  <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -13,11 +13,12 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1755887515026126');
     fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1755887515026126&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1755887515026126&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +30,6 @@
       margin: 0;
       padding: 0;
     }
-
     .container {
       max-width: 500px;
       margin: 80px auto;
@@ -38,25 +38,21 @@
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-
     h1 {
       color: #333;
       font-size: 24px;
       margin-bottom: 20px;
     }
-
     p {
       color: #666;
       margin-bottom: 25px;
       line-height: 1.5;
     }
-
     label {
       display: block;
       margin: 20px 0 8px;
       font-weight: bold;
     }
-
     input {
       width: 100%;
       padding: 12px;
@@ -64,7 +60,6 @@
       border-radius: 6px;
       font-size: 14px;
     }
-
     button {
       background: #28a745;
       color: white;
@@ -77,11 +72,9 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-
     button:hover {
       background: #218838;
     }
-
     .success {
       margin-top: 25px;
       color: #155724;
@@ -91,7 +84,6 @@
       border-radius: 6px;
       display: none;
     }
-
     .whatsapp-btn {
       display: none;
       margin-top: 20px;
@@ -104,7 +96,6 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
-
     .whatsapp-btn:hover {
       background: #1ebe57;
     }
@@ -114,12 +105,11 @@
 
 <div class="container">
   <div style="text-align: center; margin-bottom: 20px;">
-  <img src="https://www.tnpbrasil.com.br/assets/img/tnp.png" alt="Logo TNP" style="max-width: 180px; height: auto;">
+    <img src="https://www.tnpbrasil.com.br/assets/img/tnp.png" alt="Logo TNP" style="max-width: 180px; height: auto;">
   </div>
   <p style="text-align: center; color: #333; font-size: 1rem; margin-bottom: 30px;">
-  A <strong>TNP Brasil</strong> é uma plataforma colaborativa que conecta motoristas de aplicativo a oportunidades de crescimento financeiro, promovendo autonomia e sustentabilidade no dia a dia.
+    A <strong>TNP Brasil</strong> é uma plataforma colaborativa que conecta motoristas de aplicativo a oportunidades de crescimento financeiro, promovendo autonomia e sustentabilidade no dia a dia.
   </p>
-
 
   <h1>🚗 Participe da Live Exclusiva!</h1>
   <p>Descubra como ganhar até <strong>3x mais</strong> sendo motorista de app, sem mudar sua rotina! Preencha seus dados e receba as informações no WhatsApp:</p>
@@ -130,7 +120,6 @@
 
     <label for="telefone">Telefone (com DDD, qualquer formato):</label>
     <input type="tel" id="telefone" name="telefone" required>
-
 
     <button type="submit">Quero Participar</button>
   </form>
@@ -144,33 +133,30 @@
   document.getElementById('leadForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Validação do formulário
     if (!e.target.reportValidity()) return;
 
-    // Coleta dos dados do formulário
     const nome = document.getElementById('nome').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
 
-      // Disparo do evento de conversão para o Meta Pixel
-      const event_id = Date.now().toString(); // ou um UUID
+    // Gera o event_id para deduplicação
+    const event_id = Date.now().toString();
 
-      fbq('track', 'Lead', {
-        event_id: event_id
-      });
+    // Dispara evento do Meta Pixel com deduplicação
+    fbq('track', 'Lead', {
+      event_id: event_id
+    });
 
-    // Envio dos dados para o webhook
     try {
-            await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
+      await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nome,
-          telefone,
+          nome: nome,
+          telefone: telefone,
           event_id: event_id
         })
       });
 
-      // Exibição da mensagem de sucesso e do botão para o grupo do WhatsApp
       document.getElementById('leadForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
       document.getElementById('whatsappBtn').style.display = 'block';
