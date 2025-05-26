@@ -147,15 +147,18 @@
     });
 
     try {
-      await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: nome,
-          telefone: telefone,
-          event_id: event_id
-        })
-      });
+          await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors',
+      body: JSON.stringify({
+        nome: nome,
+        telefone: telefone,
+        event_id: event_id
+      })
+    });
+
+
 
       document.getElementById('leadForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
