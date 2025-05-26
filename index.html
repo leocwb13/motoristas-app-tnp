@@ -141,41 +141,38 @@
 </div>
 
 <script>
-  const form = document.getElementById('leadForm');
-  const successMsg = document.getElementById('successMsg');
-    // Após o envio bem-sucedido do formulário
-  fbq('track', 'Lead');
-
-  const whatsappBtn = document.getElementById('whatsappBtn');
-
-  form.addEventListener('submit', function(e) {
+  document.getElementById('leadForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const data = {
-      nome: form.nome.value,
-      telefone: form.telefone.value
-    };
+    // Validação do formulário
+    if (!e.target.reportValidity()) return;
 
-    fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (response.ok) {
-        successMsg.style.display = 'block';
-        whatsappBtn.style.display = 'block';
-        form.reset();
-      } else {
-        alert('Erro ao enviar. Tente novamente.');
-      }
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-      alert('Erro ao enviar. Tente novamente.');
-    });
+    // Coleta dos dados do formulário
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefone = document.getElementById('telefone').value.trim();
+
+    // Envio dos dados para o webhook
+    try {
+      await fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, email, telefone })
+      });
+
+      // Disparo do evento de conversão para o Meta Pixel
+      fbq('track', 'Lead');
+
+      // Exibição do botão para o grupo do WhatsApp
+      document.getElementById('leadForm').style.display = 'none';
+      document.getElementById('whatsSuccess').style.display = 'block';
+    } catch (error) {
+      console.error('Erro ao enviar os dados:', error);
+      alert('Ocorreu um erro ao enviar seus dados. Por favor, tente novamente.');
+    }
   });
 </script>
+
 
 </body>
 </html>
