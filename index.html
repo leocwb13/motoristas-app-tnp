@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+      <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1755887515026126');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1755887515026126&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Participe da Live — Motoristas de App</title>
@@ -95,6 +113,14 @@
 <body>
 
 <div class="container">
+  <div style="text-align: center; margin-bottom: 20px;">
+  <img src="https://www.tnpbrasil.com.br/assets/img/tnp.png" alt="Logo TNP" style="max-width: 180px; height: auto;">
+  </div>
+  <p style="text-align: center; color: #333; font-size: 1rem; margin-bottom: 30px;">
+  A <strong>TNP Brasil</strong> é uma plataforma colaborativa que conecta motoristas de aplicativo a oportunidades de crescimento financeiro, promovendo autonomia e sustentabilidade no dia a dia.
+  </p>
+
+
   <h1>🚗 Participe da Live Exclusiva!</h1>
   <p>Descubra como ganhar até <strong>3x mais</strong> sendo motorista de app, sem mudar sua rotina! Preencha seus dados e receba as informações no WhatsApp:</p>
 
@@ -117,6 +143,9 @@
 <script>
   const form = document.getElementById('leadForm');
   const successMsg = document.getElementById('successMsg');
+    // Após o envio bem-sucedido do formulário
+  fbq('track', 'Lead');
+
   const whatsappBtn = document.getElementById('whatsappBtn');
 
   form.addEventListener('submit', function(e) {
