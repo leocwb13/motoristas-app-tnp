@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participe da Live — Motoristas de App</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        label { display: block; margin: 15px 0 5px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #28a745; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .success { margin-top: 20px; color: green; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚗 Participe da Live Exclusiva!</h1>
+    <p>Descubra como ganhar até <strong>3x mais</strong> sendo motorista de app, sem mudar sua rotina!</p>
+    <p>Preencha seus dados e receba as informações no WhatsApp:</p>
+
+    <form id="leadForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="telefone">Telefone (com DDD):</label>
+        <input type="tel" id="telefone" name="telefone" required pattern="\\d{10,11}">
+
+        <button type="submit">Quero Participar</button>
+    </form>
+
+    <div class="success" id="successMsg">✅ Cadastro enviado com sucesso! Em breve entraremos em contato.</div>
+</div>
+
+<script>
+    const form = document.getElementById('leadForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const data = {
+            nome: form.nome.value,
+            telefone: form.telefone.value
+        };
+
+        fetch('https://primary-production-a61c.up.railway.app/webhook/motoristas-tnp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                successMsg.style.display = 'block';
+                form.reset();
+            } else {
+                alert('Erro ao enviar. Tente novamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao enviar. Tente novamente.');
+        });
+    });
+</script>
+
+</body>
+</html>
